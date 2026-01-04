@@ -1,5 +1,8 @@
 # Flac Decode Library
 
+This Project is under **Work-In-Progress** now  
+**该项目还未完善**
+
 If any questions, welcome for Issues & PRs   
 如果有疑问，欢迎提交Issues或PR
 
