@@ -30,8 +30,8 @@ __attribute((weak)) unsigned int portme_fread(void* dest, unsigned int len) {
  * @param samplebits the sample bits of data
  * @return
  */
-__attribute((weak)) void portme_stream(int16_t left, int16_t right, int samplebits) {
+__attribute((weak)) void portme_stream(int32_t left, int32_t right, int samplebits) {
     (void)left; (void)right; (void)samplebits;
-    assert("Unimplemented portme_stream(int16_t, int16_t, int)!");
+    assert("Unimplemented portme_stream(int32_t, int32_t, int)!");
     return;
 }

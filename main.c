@@ -7,12 +7,14 @@ unsigned int portme_fread(void* dest, unsigned int len) {
 	return fread(dest, 1, len, din);
 }
 
-void portme_stream(int16_t left, int16_t right, int samplebits) {
-    if (samplebits == 16) {
-        fwrite(&left,  1, 2, dout);
-        fwrite(&right, 1, 2, dout);
-    } else
-        assert("Other Samplebits Not Supported!");
+void portme_stream(int32_t left, int32_t right, int samplebits) {
+    //dump little-endian signed pcm, minimal whole bytes per sample, left-justified (WAV convention)
+    int bytes = (samplebits + 7) / 8;
+    int shift = bytes * 8 - samplebits;
+    left  <<= shift;
+    right <<= shift;
+    fwrite(&left,  1, bytes, dout);
+    fwrite(&right, 1, bytes, dout);
     return;
 }
 
@@ -48,8 +50,8 @@ int main(int argc, char** argv) {
     static int32_t buffer[FLAC_CONV_BUFSIZE];
 
     flac_stream_t stream;
+    flac_stream_init(&stream, buffer);
 	while (!bitstream_end(&bs)) {
-        vector_init(buffer, &stream.buffer);
         int err = flac_decode_frame(&stream, &bs);
 		if (err) {
             printf("errno %d\n", err);

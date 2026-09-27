@@ -13,6 +13,7 @@ typedef short          int16_t;
 typedef unsigned short uint16_t;
 typedef long           int32_t;
 typedef unsigned long  uint32_t;
+typedef long long      int64_t;
 #endif
 
 #ifdef HAVE_STDIO
@@ -32,6 +33,7 @@ void __assert(const char* str, int line);
 
 /* read up to len bytes, return the number of bytes actually read (< len at end of stream) */
 unsigned int portme_fread(void* dest, unsigned int len);
-void portme_stream(int16_t left, int16_t right, int samplebits);
+/* receive one decoded stereo sample pair; values are signed samplebits-wide (8..25) */
+void portme_stream(int32_t left, int32_t right, int samplebits);
 
 #endif
