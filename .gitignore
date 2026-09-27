@@ -1,3 +1,5 @@
 /stream.flac
 /result.bin
 /a.out
+/flacdemo
+*.o

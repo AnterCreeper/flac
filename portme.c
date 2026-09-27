@@ -1,7 +1,9 @@
 #include "portme.h"
 
 void __assert(const char* str, int line) {
+#ifdef HAVE_STDIO
     printf("assert fault at line %d, reason %s\r\n", line, str);
+#endif
     while(1);
     __builtin_unreachable();
     return;
@@ -10,13 +12,14 @@ void __assert(const char* str, int line) {
 /**
  * @brief target specific non-OS fread implementation
  * @note This function will wait for the device to become idle, then submit new read command and return immediately without blocking.
- * @param dst the pointer where data be loaded
+ * @param dest the pointer where data be loaded
  * @param len the size of data
- * @return
+ * @return the number of bytes actually read, < len means end of stream
  */
-__attribute((weak)) void portme_fread(void* dest, size_t len) {
-    assert("Unimplemented portme_fread(void*, size_t)!");
-    return;
+__attribute((weak)) unsigned int portme_fread(void* dest, unsigned int len) {
+    (void)dest; (void)len;
+    assert("Unimplemented portme_fread(void*, unsigned int)!");
+    return 0;
 }
 
 /**
@@ -27,7 +30,8 @@ __attribute((weak)) void portme_fread(void* dest, size_t len) {
  * @param samplebits the sample bits of data
  * @return
  */
-__attribute((weak)) void portme_stream(int32_t left, int32_t right, int samplebits) {
-    assert("Unimplemented portme_stream(int32_t, int32_t, int)!");
+__attribute((weak)) void portme_stream(int16_t left, int16_t right, int samplebits) {
+    (void)left; (void)right; (void)samplebits;
+    assert("Unimplemented portme_stream(int16_t, int16_t, int)!");
     return;
 }
